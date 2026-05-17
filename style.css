@@ -70,9 +70,13 @@ body {
     margin-top: 18px;
 }
 
-.hero .page-link a,
-.footer a {
+.hero .page-link a {
     color: #ffffff;
+    text-decoration: underline;
+}
+
+.footer a {
+    color: #2563eb;
     text-decoration: underline;
 }
 

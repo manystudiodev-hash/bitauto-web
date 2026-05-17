@@ -35,12 +35,23 @@
                 </div>
 
                 <div class="section">
-                    <h2>4. Almacenamiento local</h2>
+                    <h2>4. Control de acceso y registro de usuarios</h2>
+                    <p>Bitauto implementa un sistema de control de acceso administrado:</p>
+                    <ul>
+                        <li><strong>Administrador</strong>: puede registrar asesores y trabajadores ingresando su correo de Google. Una vez registrados, estos usuarios pueden iniciar sesión con esa cuenta.</li>
+                        <li><strong>Asesores y trabajadores</strong>: solo pueden acceder a la app si han sido previamente registrados por el administrador con su correo de Google. Si intentan iniciar sesión sin estar registrados, el acceso será rechazado.</li>
+                        <li><strong>Protección de datos</strong>: este sistema garantiza que solo el personal autorizado del taller puede conectarse y acceder a los datos.</li>
+                    </ul>
+                    <p>El administrador es responsable de mantener la lista de usuarios actualizada, registrando nuevo personal y dando de baja a quienes ya no trabajen en el taller.</p>
+                </div>
+
+                <div class="section">
+                    <h2>5. Almacenamiento local</h2>
                     <p>Los datos se guardan localmente en el celular mediante SQLite. Esto garantiza que la información esté disponible sin conexión y que el usuario tenga un control directo sobre los registros almacenados en su dispositivo.</p>
                 </div>
 
                 <div class="section">
-                    <h2>5. Sincronización en la nube</h2>
+                    <h2>6. Sincronización en la nube</h2>
                     <p>Bitauto sincroniza datos con Firebase Firestore y Google Sheets para respaldos y continuidad del servicio.</p>
                     <ul>
                         <li><span class="highlight">Firebase Firestore</span>: respaldo de órdenes y datos estructurados disponible desde múltiples dispositivos.</li>
@@ -49,33 +60,34 @@
                 </div>
 
                 <div class="section">
-                    <h2>6. Identificador único de órdenes</h2>
+                    <h2>7. Identificador único de órdenes</h2>
                     <p>Cada orden se identifica con un <span class="highlight">id_firestore</span> único. Este identificador permite asociar correctamente la orden local con su copia en Firestore y con los registros sincronizados en Google Sheets.</p>
                 </div>
 
                 <div class="section">
-                    <h2>7. Acceso y permisos de Google</h2>
+                    <h2>8. Acceso y permisos de Google</h2>
                     <p>La aplicación requiere acceso a tu cuenta de Google y a Google Sheets para escribir en tu propia bitácora. Solo se solicitarán los permisos necesarios para operar correctamente y crear registros en tu hoja de cálculo autorizada.</p>
                 </div>
 
                 <div class="section">
-                    <h2>8. Privacidad y seguridad</h2>
+                    <h2>9. Privacidad y seguridad</h2>
                     <p>Bitauto protege los datos locales y no comparte información con terceros sin tu autorización. La sincronización se realiza únicamente con las cuentas y hojas de cálculo que tú autorices explícitamente.</p>
                 </div>
 
                 <div class="section">
-                    <h2>9. Limitación de responsabilidad</h2>
+                    <h2>10. Limitación de responsabilidad</h2>
                     <p>Bitauto actúa como una herramienta de apoyo. No nos hacemos responsables por decisiones comerciales, errores de ingreso de datos, problemas de hardware o por el uso indebido de la información por parte del usuario.</p>
                 </div>
 
                 <div class="section">
-                    <h2>10. Cambios en los términos</h2>
+                    <h2>11. Cambios en los términos</h2>
                     <p>Estos Términos y Condiciones pueden ser actualizados. Las modificaciones se publicarán en la próxima versión disponible de la app y se recomienda revisar periódicamente el contenido para conocer los cambios.</p>
                 </div>
             </section>
 
             <footer class="footer">
                 <p>Bitauto - Herramienta de gestión automotriz. Para consultas, ponte en contacto con el soporte de la aplicación.</p>
+                <p>Contacto del desarrollador: <a href="mailto:manystudiodev@gmail.com">manystudiodev@gmail.com</a></p>
             </footer>
         </article>
     </div>

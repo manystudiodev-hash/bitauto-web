@@ -21,85 +21,136 @@
             <section class="content">
                 <div class="section">
                     <h2>1. Visión general</h2>
-                    <p>Bitauto digitaliza desde la recepción de un vehículo hasta su entrega, gestionando órdenes de trabajo, clientes, personal y estadísticas del taller.</p>
+                    <p>Bitauto es una app para ayudar a planificar un taller automotriz. Contabiliza los días en taller, controla los vehículos que llevan más tiempo y separa la información de los vehículos que están dentro y fuera del taller.</p>
+                    <p>Según el tipo de plan, los datos pueden verse desde una hoja de Google Sheets en un PC u otro dispositivo con conexión a internet. También funciona sin conexión y permite usarla sin almacenar datos en la nube.</p>
                 </div>
 
                 <div class="section">
-                    <h2>2. Inicio rápido en tres pasos</h2>
-                    <p>El viaje de un nuevo usuario se divide en tres pasos sencillos:</p>
+                    <h2>2. Cómo iniciar sesión</h2>
+                    <p>El acceso a Bitauto está protegido y controlado por el administrador del taller:</p>
                     <ul>
-                        <li><strong>Autenticación Segura</strong>: el usuario inicia sesión con una cuenta de Google, garantizando acceso rápido y confiable.</li>
-                        <li><strong>Elección de Plan</strong>: elige entre Plan Básico o Plan Pro según las necesidades del taller.</li>
-                        <li><strong>Registro del Taller</strong>: si es la primera vez que el taller usa la app, se solicita información básica del negocio.</li>
+                        <li><strong>Para administradores</strong>: inician sesión con su cuenta de Google. Al iniciar, se solicita autorizar los permisos de <span class="highlight">Google Drive</span> y <span class="highlight">Google Sheets</span>.
+                            <ul>
+                                <li>Estos permisos son necesarios para conectar asesores y trabajadores, y escribir en la bitácora de Google Sheets.</li>
+                                <li>Si NO autoriza los permisos, el sistema lo enviará al <strong>Plan Básico</strong>, donde no podrá registrar asesores ni trabajadores ni acceder a Google Sheets.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Para asesores</strong>: solo pueden acceder si el administrador los ha registrado previamente con su correo de Google. Al iniciar sesión, también deben autorizar los permisos de <span class="highlight">Google Drive</span> y <span class="highlight">Google Sheets</span>.
+                            <ul>
+                                <li>Estos permisos son necesarios para conectarse a los datos del taller administrado por el admin.</li>
+                                <li>Si NO autoriza los permisos, no habrá conexión con los datos del taller y no podrá acceder a las órdenes y información compartida.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Para trabajadores</strong>: solo pueden acceder si el administrador los ha registrado previamente con su correo de Google. Al iniciar sesión, no se solicita autorización de permisos. Pueden acceder directamente a los datos del taller.</li>
+                    </ul>
+                    <p><strong>Cambiar de plan:</strong> el administrador puede cambiar entre el Plan Básico y Plan Pro en cualquier momento desde el menú del taller, sección <strong>ADMINISTRAR CUENTA</strong>.</p>
+                </div>
+
+                <div class="section">
+                    <h2>3. Tipos de plan</h2>
+                    <p>La aplicación ofrece dos planes con características distintas:</p>
+                    <ul>
+                        <li><strong>Plan Básico</strong>: solo para un usuario. No hay datos en la nube, por lo que si el celular se pierde, también se pierde toda la información almacenada.</li>
+                        <li><strong>Plan Pro</strong>: para talleres con varios usuarios, sincroniza datos en Firebase y Google Sheets, y agrega gestión de roles. Además, incluye informes de trabajadores, tipos de cliente e historial de órdenes.</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>3. Planes de uso</h2>
+                    <h2>4. Menú del administrador</h2>
+                    <p>El administrador dispone de un panel completo para gestionar el taller:</p>
                     <ul>
-                        <li><strong>Plan Básico</strong>: ideal para uso individual. Todos los datos se guardan localmente en el dispositivo, sin respaldo en la nube ni funciones colaborativas.</li>
-                        <li><strong>Plan Pro</strong>: solución completa para equipos. Los datos se respaldan en Firebase y se sincronizan con Google Sheets, permitiendo acceso desde múltiples dispositivos y gestión de roles. Los registros de trabajadores, tipos de clientes, estados de reparación y asesores se almacenan en Firestore, mientras que las órdenes de trabajo permanecen solo en la app y en Google Sheets.</li>
+                        <li><strong>Usuarios</strong>: registra asesores y trabajadores indicando su correo de Google. Una vez registrados, ellos pueden iniciar sesión en la app con esa cuenta. El admin también puede dar de baja a usuarios.</li>
+                        <li><strong>Catálogos</strong>: tipos de cliente, estados de reparación y servicios disponibles.</li>
+                        <li><strong>Órdenes</strong>: ver, editar y filtrar órdenes de trabajo.</li>
+                        <li><strong>Informes</strong>: acceder a estadísticas y enviar resúmenes a Google Sheets.</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>4. Registro y acceso al taller</h2>
-                    <p>Si el taller ya existe, los empleados pueden acceder sin repetir el registro. Si es un nuevo taller, el sistema solicita datos como nombre, dirección y contactos del negocio.</p>
-                </div>
-
-                <div class="section">
-                    <h2>5. Roles y permisos</h2>
+                    <h2>5. Registro de datos maestros</h2>
+                    <p>Antes de operar, el taller puede registrar información clave para mantener el flujo organizado:</p>
                     <ul>
-                        <li><strong>Asesores</strong>: atienden a los clientes y crean órdenes de trabajo.</li>
-                        <li><strong>Trabajadores</strong>: personal técnico con vistas simplificadas para ejecutar reparaciones.</li>
-                        <li><strong>Administradores</strong>: gestionan la configuración del taller, los roles y los datos principales.</li>
+                        <li><strong>Trabajadores</strong>: técnicos del taller con su especialidad y disponibilidad.</li>
+                        <li><strong>Asesores</strong>: responsables de atención al cliente y creación de órdenes.</li>
+                        <li><strong>Tipos de cliente</strong>: particular, aseguradora, flota, interno o cualquier otra categoría que use el taller.</li>
+                        <li><strong>Estados de reparación</strong>: por ejemplo, recepción, diagnóstico, en espera de repuestos, en reparación, fuera del taller, entrega pendiente, terminado.</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>6. Personalización del flujo</h2>
-                    <p>El administrador puede adaptar la app a las operaciones reales del taller:</p>
+                    <h2>6. Registrar una orden</h2>
+                    <p>Registrar una orden es el paso principal para iniciar el trabajo:</p>
                     <ul>
-                        <li>Tipos de Cliente: particular, aseguradoras, interna, entre otros.</li>
-                        <li>Estados de Reparación: como En espera de repuestos, Lavado o Control de calidad.</li>
+                        <li>Selecciona cliente, vehículo y asesor responsable.</li>
+                        <li>Describe el servicio requerido, observaciones y partes necesarias.</li>
+                        <li>Asigna el estado inicial y, si aplica, una fecha de entrega estimada.</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>7. Módulos clave</h2>
+                    <h2>7. Editar una orden</h2>
+                    <p>Las órdenes pueden modificarse en cualquier momento para actualizar datos:</p>
                     <ul>
-                        <li><strong>Módulo “Margarita”</strong>: método para realizar seguimiento del vehículo y poder contactar con el cliente y enviar el registro fotográfico usando WhatsApp con el teléfono del cliente registrado.</li>
-                        <li><strong>Registro de Órdenes</strong>: creación de órdenes de trabajo con cliente, vehículo, servicios y observaciones iniciales.</li>
-                        <li><strong>Tablero de Flujo (Kanban)</strong>: vista visual de las órdenes activas en columnas según su estado, con arrastrar y soltar para avanzar el proceso.</li>
+                        <li>Cambiar estado de reparación.</li>
+                        <li>Agregar o quitar servicios y repuestos.</li>
+                        <li>Modificar asignaciones de trabajador o asesor.</li>
+                        <li>Actualizar notas de seguimiento y fechas de entrega.</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>8. Estados específicos</h2>
+                    <h2>8. Cotización particular</h2>
+                    <p>La cotización particular es una vista de posibles ingresos para el taller que aún no están confirmados. Está diseñada para no perder ningún dato del taller ni alterar lo que ya está registrado en las órdenes activas.</p>
+                    <p>Permite guardar presupuestos y opciones de servicio por separado, de modo que el taller pueda preservar su información oficial mientras evalúa alternativas con el cliente.</p>
+                </div>
+
+                <div class="section">
+                    <h2>9. Módulo Margarita</h2>
+                    <p>El módulo “Margarita” está pensado para el seguimiento visual y la comunicación con el cliente:</p>
                     <ul>
-                        <li><strong>Fuera del Taller</strong>: vehículos que han salido temporalmente para prueba o transporte.</li>
-                        <li><strong>Entrega Pendiente</strong>: vehículos listos para entregar que requieren pagos pendientes o revisiones finales.</li>
-                        <li><strong>Revisión</strong>: vehículos que esperan inspección final o control de calidad.</li>
+                        <li>Registro fotográfico del vehículo en diferentes etapas.</li>
+                        <li>Envío de actualizaciones por WhatsApp usando el número del cliente.</li>
+                        <li>Control de la trazabilidad del servicio.</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>9. Informes e integración con Sheets</h2>
-                    <p>Bitauto ofrece análisis internos y sincronización con Google Sheets para respaldos y análisis avanzados. Las órdenes de trabajo se sincronizan únicamente con Google Sheets, no con Firestore.</p>
+                    <h2>10. Planificador</h2>
+                    <p>El planificador ayuda a organizar el taller con prioridad de tareas y fechas de entrega:</p>
                     <ul>
-                        <li>Informes internos: historial de vehículos, rendimiento de trabajadores y análisis por tipo de cliente.</li>
-                        <li>Google Sheets: respaldo automático en tu hoja de cálculo para crear gráficos, tablas dinámicas y análisis financieros fuera de la aplicación.</li>
+                        <li>Agenda órdenes según urgencia y capacidad de los técnicos.</li>
+                        <li>Visualiza la carga de trabajo diaria y semanal.</li>
+                        <li>Coordina pruebas, entregas y tiempos de espera.</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>10. Beneficios para el taller</h2>
-                    <p>Bitauto ayuda a tu taller a mejorar la productividad, reducir errores y mantener visibilidad total sobre cada vehículo en proceso.</p>
+                    <h2>11. Fuera del taller</h2>
+                    <p>Este estado está diseñado para los vehículos que están fuera del taller y pendientes de ingresar a reparar. Se usa para mantenerlos separados y no mezclar sus datos con los del taller en curso.</p>
                 </div>
+
+                <div class="section">
+                    <h2>12. Entregas pendientes</h2>
+                    <p>Las órdenes en entrega pendiente son aquellas que están listas para el cliente pero requieren alguna acción final, como cobro, revisión final o autorización del cliente.</p>
+                    <p>La app muestra estas órdenes por separado para que el taller no pierda ninguna entrega importante.</p>
+                </div>
+
+                <div class="section">
+                    <h2>13. Informes</h2>
+                    <p>Los informes permiten medir el desempeño del taller y tomar decisiones informadas:</p>
+                    <ul>
+                        <li>Informe de órdenes terminadas y tiempos de reparación.</li>
+                        <li>Informe de ingresos por tipo de cliente o servicio.</li>
+                        <li>Informe por trabajador que muestra la cantidad de vehículos asignados.</li>
+                        <li>Respaldo en Google Sheets para análisis externo.</li>
+                    </ul>
+                </div>
+
             </section>
 
             <footer class="footer">
                 <p>Bitauto - Gestión automotriz moderna y confiable. Regresa a <a href="index.html">Términos y Condiciones</a>.</p>
+                <p>Contacto del desarrollador: <a href="mailto:manystudiodev@gmail.com">manystudiodev@gmail.com</a></p>
             </footer>
         </article>
     </div>
