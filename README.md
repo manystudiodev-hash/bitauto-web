@@ -4,6 +4,7 @@ Página estática para Bitauto con:
 
 - `index.html`: Términos y Condiciones de la aplicación.
 - `app.html`: Explicación de cómo funciona la app para talleres automotrices.
+- `privacy.html`: Política de Privacidad y detalles sobre el manejo de datos.
 - `style.css`: Estilos compartidos y responsivos.
 - `assets/logo.png`: Logo usado en la interfaz.
 

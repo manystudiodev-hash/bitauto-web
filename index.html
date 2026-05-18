@@ -15,6 +15,7 @@
                     <h1>Términos y Condiciones</h1>
                     <p>Bienvenido a Bitauto. Esta página describe cómo gestionamos datos, sincronizamos servicios y protegemos tu información.</p>
                     <p class="page-link"><a href="app.html">Ver cómo funciona Bitauto</a></p>
+                    <p class="page-link"><a href="privacy.html">Ver Política de Privacidad</a></p>
                 </div>
             </header>
 
@@ -51,42 +52,125 @@
                 </div>
 
                 <div class="section">
-                    <h2>6. Sincronización en la nube</h2>
-                    <p>Bitauto sincroniza datos con Firebase Firestore y Google Sheets para respaldos y continuidad del servicio.</p>
+                    <h2>6. Tratamiento de datos sensibles</h2>
+                    <p>Bitauto recolecta ciertos datos sensibles del cliente necesarios para la operación del taller:</p>
                     <ul>
-                        <li><span class="highlight">Firebase Firestore</span>: respaldo de órdenes y datos estructurados disponible desde múltiples dispositivos.</li>
-                        <li><span class="highlight">Google Sheets</span>: escritura en la bitácora propia del usuario para mantener un registro actualizado en su hoja de cálculo.</li>
+                        <li><strong>Nombre del cliente</strong></li>
+                        <li><strong>Teléfono del cliente</strong></li>
+                    </ul>
+                    <p><strong>Almacenamiento de datos sensibles:</strong></p>
+                    <ul>
+                        <li>Los datos sensibles se almacenan <span class="highlight">únicamente en SQLite</span> (base de datos local del dispositivo) y en <span class="highlight">Google Sheets</span>.</li>
+                        <li><strong>NO se envían datos sensibles a Firebase Firestore</strong>. Estos datos permanecen bajo control del administrador del taller.</li>
+                    </ul>
+                    <p><strong>Responsabilidad:</strong></p>
+                    <ul>
+                        <li>El <span class="highlight">administrador del taller</span> es el único responsable de resguardar, proteger y gestionar estos datos sensibles conforme a las leyes de privacidad y protección de datos aplicables en su jurisdicción.</li>
+                        <li>El administrador debe garantizar que los datos solo sean accesibles por personal autorizado del taller.</li>
+                    </ul>
+                    <p><strong>Encriptación en tránsito:</strong></p>
+                    <ul>
+                        <li>Los datos sensibles se transmiten <span class="highlight">cifrados</span> desde la aplicación hacia Google Sheets mediante la API de Sheets.</li>
+                        <li>El cifrado garantiza que los datos estén protegidos durante el viaje desde el dispositivo hacia la hoja de cálculo.</li>
+                    </ul>
+                    <p><strong>Limitación de responsabilidad de Bitauto:</strong></p>
+                    <ul>
+                        <li>Bitauto <span class="highlight">no se hace responsable</span> por filtraciones, pérdida o mal uso de datos que ocurran en Google Sheets u otros sistemas gestionados por el cliente.</li>
+                        <li>La responsabilidad sobre la seguridad de la hoja de Google Sheets, el acceso a ella, y el control de permisos recae sobre el administrador del taller.</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>7. Identificador único de órdenes</h2>
+                    <h2>7. Sincronización en la nube</h2>
+                    <p>Bitauto sincroniza datos con Firebase Firestore y Google Sheets para respaldos y continuidad del servicio.</p>
+                    <ul>
+                        <li><span class="highlight">Firebase Firestore</span>: respaldo de órdenes y datos estructurados disponible desde múltiples dispositivos. <strong>NOTA: Los datos sensibles (nombre y teléfono del cliente) no se sincronizan con Firebase.</strong></li>
+                        <li><span class="highlight">Google Sheets</span>: escritura en la bitácora propia del usuario para mantener un registro actualizado en su hoja de cálculo.</li>
+                    </ul>
+                    <p>Los datos sensibles se mantienen localmente y, cuando el usuario autoriza la sincronización, se escriben en Google Sheets.</p>
+                </div>
+
+                <div class="section">
+                    <h2>8. Identificador único de órdenes</h2>
                     <p>Cada orden se identifica con un <span class="highlight">id_firestore</span> único. Este identificador permite asociar correctamente la orden local con su copia en Firestore y con los registros sincronizados en Google Sheets.</p>
                 </div>
 
                 <div class="section">
-                    <h2>8. Acceso y permisos de Google</h2>
+                    <h2>9. Acceso y permisos de Google</h2>
                     <p>La aplicación requiere acceso a tu cuenta de Google y a Google Sheets para escribir en tu propia bitácora. Solo se solicitarán los permisos necesarios para operar correctamente y crear registros en tu hoja de cálculo autorizada.</p>
                 </div>
 
                 <div class="section">
-                    <h2>9. Privacidad y seguridad</h2>
-                    <p>Bitauto protege los datos locales y no comparte información con terceros sin tu autorización. La sincronización se realiza únicamente con las cuentas y hojas de cálculo que tú autorices explícitamente.</p>
+                    <h2>10. Integración con WhatsApp</h2>
+                    <p>Bitauto se integra con <span class="highlight">WhatsApp</span> como herramienta complementaria para facilitar la comunicación entre los miembros del taller y los clientes:</p>
+                    <ul>
+                        <li><strong>Comunicación con clientes</strong>: la app permite enviar información sobre las órdenes de servicio, estado de reparaciones, notificaciones de entrega y otros datos relevantes al cliente a través de WhatsApp.</li>
+                        <li><strong>Conexión trabajador-administrador</strong>: los trabajadores pueden comunicarse directamente con el administrador a través de WhatsApp para coordinar tareas, resolver dudas o informar sobre el estado de las órdenes.</li>
+                    </ul>
+                    <p><strong>Responsabilidad sobre la comunicación:</strong></p>
+                    <ul>
+                        <li>El administrador es responsable de garantizar que todas las comunicaciones se realicen respetando la privacidad del cliente y las leyes de protección de datos.</li>
+                        <li>Bitauto solo actúa como intermediario para facilitar el envío de mensajes; no controla el contenido ni la frecuencia de las comunicaciones.</li>
+                        <li>El taller es responsable de obtener el consentimiento previo del cliente antes de enviar mensajes a través de WhatsApp.</li>
+                    </ul>
+                    <p><strong>Limitación de responsabilidad:</strong></p>
+                    <ul>
+                        <li>Bitauto <span class="highlight">no se hace responsable</span> por problemas de entrega, pérdida de mensajes o cualquier inconveniente relacionado con WhatsApp o la plataforma de mensajería.</li>
+                        <li>La responsabilidad sobre la comunicación y la gestión de la conversación recae completamente en el administrador y los usuarios del taller.</li>
+                    </ul>
                 </div>
 
                 <div class="section">
-                    <h2>10. Limitación de responsabilidad</h2>
-                    <p>Bitauto actúa como una herramienta de apoyo. No nos hacemos responsables por decisiones comerciales, errores de ingreso de datos, problemas de hardware o por el uso indebido de la información por parte del usuario.</p>
+                    <h2>11. Uso de la cámara</h2>
+                    <p>Bitauto permite usar la cámara del dispositivo para capturar registros fotográficos de los trabajos realizados en el taller:</p>
+                    <ul>
+                        <li><strong>Propósito</strong>: documentar visualmente el estado de los vehículos, trabajos completados, daños, reparaciones y otros aspectos relevantes del servicio.</li>
+                        <li><strong>Integración con WhatsApp</strong>: las fotos capturadas se envían directamente a través de WhatsApp y no se almacenan en la memoria del dispositivo del trabajador.</li>
+                    </ul>
+                    <p><strong>Almacenamiento de fotos:</strong></p>
+                    <ul>
+                        <li>Las fotos <span class="highlight">NO se guardan</span> en el teléfono del trabajador.</li>
+                        <li>Las fotos se envían directamente a WhatsApp y quedan almacenadas en los servidores de la plataforma de mensajería.</li>
+                        <li>La app no mantiene un servidor central de almacenamiento de imágenes.</li>
+                    </ul>
+                    <p><strong>Privacidad y responsabilidad:</strong></p>
+                    <ul>
+                        <li>El trabajador es responsable de que las fotos capturadas no incluyan información sensible innecesaria o datos de terceros sin autorización.</li>
+                        <li>El administrador es responsable de garantizar que se obtiene el consentimiento del cliente para fotografiar el vehículo y los trabajos realizados.</li>
+                        <li>El administrador debe coordinar el almacenamiento y custodia de evidencia fotográfica según su política interna.</li>
+                    </ul>
+                    <p><strong>Limitación de responsabilidad:</strong></p>
+                    <ul>
+                        <li>Bitauto <span class="highlight">no se hace responsable</span> por la pérdida, eliminación o filtración de fotos en WhatsApp u otros sistemas de mensajería.</li>
+                        <li>La responsabilidad sobre la protección de las fotos recae en el taller y en la plataforma de WhatsApp.</li>
+                    </ul>
                 </div>
 
                 <div class="section">
-                    <h2>11. Cambios en los términos</h2>
+                    <h2>12. Privacidad y seguridad</h2>
+                    <p>Bitauto protege los datos locales y no comparte información con terceros sin tu autorización. La sincronización se realiza únicamente con las cuentas y hojas de cálculo que tú autorices explícitamente. El administrador del taller es responsable de mantener la confidencialidad y seguridad de todos los datos, especialmente los datos sensibles del cliente.</p>
+                </div>
+
+                <div class="section">
+                    <h2>13. Limitación de responsabilidad</h2>
+                    <p>Bitauto actúa como una herramienta de apoyo. No nos hacemos responsables por decisiones comerciales, errores de ingreso de datos, problemas de hardware o por el uso indebido de la información por parte del usuario. Tampoco somos responsables por filtraciones o compromisos de seguridad en sistemas terceros como Google Sheets o WhatsApp.</p>
+                </div>
+
+                <div class="section">
+                    <h2>14. Cambios en los términos</h2>
                     <p>Estos Términos y Condiciones pueden ser actualizados. Las modificaciones se publicarán en la próxima versión disponible de la app y se recomienda revisar periódicamente el contenido para conocer los cambios.</p>
+                </div>
+
+                <div class="section">
+                    <h2>15. Política de Privacidad</h2>
+                    <p>Para información detallada sobre el manejo de datos personales y los permisos de Google Drive, consulta la <a href="privacy.html">Política de Privacidad</a>.</p>
+                    <p>Bitauto no vende, alquila ni comparte tus datos personales con terceros para fines comerciales.</p>
                 </div>
             </section>
 
             <footer class="footer">
                 <p>Bitauto - Herramienta de gestión automotriz. Para consultas, ponte en contacto con el soporte de la aplicación.</p>
+                <p><a href="privacy.html">Política de Privacidad</a></p>
                 <p>Contacto del desarrollador: <a href="mailto:manystudiodev@gmail.com">manystudiodev@gmail.com</a></p>
             </footer>
         </article>
