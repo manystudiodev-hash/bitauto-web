@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Cuenta - Bitauto</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, deleteUser } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, deleteDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Configuración de Firebase obtenida de google-services.json
+        const firebaseConfig = {
+            apiKey: "AIzaSyA_EudAatSjRCQ8RU8qUyR2ePQeJpFqKA8",
+            authDomain: "bitauto-9d65c.firebaseapp.com",
+            projectId: "bitauto-9d65c",
+            storageBucket: "bitauto-9d65c.firebasestorage.app",
+            messagingSenderId: "935188358521"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Referencias del DOM
+        const btnLogin = document.getElementById('btnLogin');
+        const btnDelete = document.getElementById('btnDelete');
+        const statusText = document.getElementById('statusText');
+        const userInfo = document.getElementById('userInfo');
+
+        let currentUser = null;
+
+        // Función para Iniciar Sesión
+        btnLogin.addEventListener('click', async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+                statusText.innerText = "Iniciando sesión...";
+                const result = await signInWithPopup(auth, provider);
+                currentUser = result.user;
+                
+                statusText.innerText = "Sesión iniciada correctamente.";
+                userInfo.innerText = `Conectado como: ${currentUser.email}`;
+                
+                btnLogin.style.display = 'none';
+                btnDelete.style.display = 'block';
+            } catch (error) {
+                console.error(error);
+                statusText.innerText = "Error al iniciar sesión: " + error.message;
+            }
+        });
+
+        // Función para Eliminar Cuenta
+        btnDelete.addEventListener('click', async () => {
+            if (!currentUser) return;
+
+            const confirmacion = confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción borrará todos tus datos de Firebase y no se puede deshacer.");
+            if (!confirmacion) return;
+
+            try {
+                statusText.innerText = "Borrando datos de Firestore...";
+                const uid = currentUser.uid;
+
+                // 1. Borrar documentos en las colecciones
+                const colecciones = ['trabajadores', 'asesores', 'estados_reparacion', 'tipos_cliente'];
+                
+                for (const col of colecciones) {
+                    const q = query(collection(db, col), where('adminUid', '==', uid));
+                    const snapshot = await getDocs(q);
+                    
+                    statusText.innerText = `Borrando documentos de ${col}...`;
+                    const deletePromises = [];
+                    snapshot.forEach((doc) => {
+                        deletePromises.push(deleteDoc(doc.ref));
+                    });
+                    await Promise.all(deletePromises);
+                }
+
+                // 2. Borrar documento de usuario
+                statusText.innerText = "Borrando perfil de usuario...";
+                await deleteDoc(doc(db, 'usuarios', uid));
+
+                // 3. Borrar usuario de Firebase Auth
+                statusText.innerText = "Eliminando cuenta de autenticación...";
+                await deleteUser(currentUser);
+
+                statusText.innerText = "¡Éxito! Tu cuenta y todos tus datos han sido eliminados permanentemente.";
+                statusText.style.color = "green";
+                btnDelete.style.display = 'none';
+                userInfo.innerText = "";
+                currentUser = null;
+
+            } catch (error) {
+                console.error(error);
+                statusText.innerText = "Error durante el proceso: " + error.message;
+                statusText.style.color = "red";
+            }
+        });
+    </script>
+    <style>
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4285F4;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        .btn-danger {
+            background-color: #d9534f;
+        }
+        #btnDelete {
+            display: none;
+        }
+        #statusText {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #555;
+        }
+        #userInfo {
+            margin-top: 10px;
+            color: #333;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <article class="card">
+            <header class="hero">
+                <img src="assets/logo.png" alt="Bitauto logo">
+                <div>
+                    <h1>Eliminar mi Cuenta</h1>
+                    <p>Desde aquí puedes borrar de forma permanente tu cuenta y todos tus datos asociados en Bitauto.</p>
+                    <p class="page-link"><a href="privacy.html">Volver a Política de Privacidad</a></p>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="section">
+                    <h2>Proceso de Eliminación</h2>
+                    <p>Para cumplir con las políticas de Google Play, te ofrecemos este método para darte de baja del servicio. Sigue los siguientes pasos:</p>
+                    <ol>
+                        <li>Presiona el botón de abajo para iniciar sesión con la misma cuenta de Google que usas en la app.</li>
+                        <li>Una vez conectado, se habilitará el botón de eliminación.</li>
+                        <li>Confirma la acción. Se borrarán tus datos de trabajadores, asesores, estados, tipos de cliente y tu perfil.</li>
+                    </ol>
+
+                    <button id="btnLogin" class="btn">Iniciar Sesión con Google</button>
+                    <button id="btnDelete" class="btn btn-danger">Eliminar mi Cuenta Permanentemente</button>
+                    
+                    <div id="userInfo"></div>
+                    <div id="statusText">Esperando acción...</div>
+                </div>
+
+                <div class="section">
+                    <h2>¿Qué pasa con mis archivos de Google Sheets?</h2>
+                    <p>Por razones de seguridad y permisos limitados, esta página **no puede** borrar las hojas de cálculo creadas en tu Google Drive personal. Si deseas eliminarlas, deberás hacerlo manualmente ingresando a tu cuenta de Google Drive.</p>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <p>Bitauto - Gestión de Datos.</p>
+                <p>Contacto del desarrollador: <a href="mailto:manystudiodev@gmail.com">manystudiodev@gmail.com</a></p>
+            </footer>
+        </article>
+    </div>
+</body>
+</html>
