@@ -30,7 +30,7 @@
                     <h2>1. INFORMACIÓN QUE RECOPILAMOS</h2>
                     <p>Para el correcto funcionamiento de la Aplicación, recopilamos la siguiente información:</p>
                     <ul>
-                        <li><strong>Datos de Autenticación (Google Sign-In)</strong>: Cuando inicias sesión, recopilamos tu nombre, dirección de correo electrónico y foto de perfil proporcionados por Google.</li>
+                        <li><strong>Datos de Autenticación</strong>: La aplicación usa Firebase Authentication (incluyendo proveedores como Google Sign-In si eliges usarlos). Al autenticarte, podemos obtener nombre, correo electrónico y foto de perfil según el proveedor.</li>
                         <li><strong>Datos de Operación</strong>: Información que ingresas manualmente sobre órdenes de trabajo, vehículos (placa, marca, línea), clientes, trabajadores y estados de reparación.</li>
                         <li><strong>Datos de Almacenamiento Local</strong>: La aplicación guarda una base de datos en tu dispositivo para permitir el trabajo sin conexión.</li>
                     </ul>
@@ -42,7 +42,7 @@
                     <ul>
                         <li>Identificar y autenticar tu cuenta de usuario.</li>
                         <li>Permitir la gestión y control de las órdenes de trabajo de tu taller.</li>
-                        <li>Sincronización con Google Sheets: La aplicación utiliza tu cuenta de Google para crear y actualizar hojas de cálculo en tu Google Drive personal con los datos de tus órdenes de trabajo.</li>
+                        <li>Sincronización en la nube: La aplicación sincroniza datos estructurados del taller con Firebase Firestore para respaldo y multi-dispositivo. Los datos sensibles de clientes pueden almacenarse en Firestore para respaldo, pero la web no mostrará esos campos sensibles; recomendamos separar datos sensibles en una subcolección privada o servirlos mediante Cloud Functions con control de acceso.</li>
                     </ul>
                 </div>
 
@@ -52,18 +52,17 @@
                     <p>Tus datos son procesados a través de los siguientes servicios de terceros, los cuales cumplen con altos estándares de seguridad:</p>
                     <ul>
                         <li><strong>Firebase (Google)</strong>: Utilizado para la autenticación de usuarios y almacenamiento de datos de configuración del taller en la nube.</li>
-                        <li><strong>Google Drive / Sheets API</strong>: Utilizado para exportar y sincronizar tus datos de trabajo en tu propia cuenta de Google.</li>
+                        <li><strong>Firebase (Google)</strong>: Utilizado para la autenticación de usuarios y almacenamiento de datos estructurados del taller en Firestore.</li>
                     </ul>
                 </div>
 
                 <div class="section">
-                    <h2>4. PERMISOS ESPECIALES DE GOOGLE DRIVE</h2>
-                    <p>La Aplicación solicita el permiso de Google Drive con el alcance limitado <strong>drive.file</strong>. Este permiso solo permite a la Aplicación:</p>
-                    <ul>
-                        <li>Crear nuevas hojas de cálculo de bitácora.</li>
-                        <li>Leer y modificar únicamente los archivos que han sido creados por la propia Aplicación.</li>
-                    </ul>
-                    <p>La Aplicación no puede leer, modificar ni eliminar ningún otro archivo personal de tu Google Drive.</p>
+                    <h2>4. USO DE SERVICIOS EXTERNOS</h2>
+                        <p>La aplicación utiliza servicios de terceros para ofrecer sincronización y autenticación segura. En la versión actual:</p>
+                        <ul>
+                            <li>Firebase Authentication: gestiona el inicio de sesión y la identidad del usuario.</li>
+                            <li>Firebase Firestore: almacena datos estructurados del taller (órdenes, catálogos, roles), excluyendo por diseño los campos sensibles de clientes.</li>
+                        </ul>
                 </div>
 
                 <div class="section">

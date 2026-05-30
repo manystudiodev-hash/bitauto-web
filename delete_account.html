@@ -8,8 +8,8 @@
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, deleteUser } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, deleteDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, deleteUser, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, deleteDoc, collection, getDocs, query, where, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // Configuración de Firebase obtenida de google-services.json
         const firebaseConfig = {
@@ -40,10 +40,21 @@
                 statusText.innerText = "Iniciando sesión...";
                 const result = await signInWithPopup(auth, provider);
                 currentUser = result.user;
-                
+
+                // Verificar que el usuario exista en la colección 'usuarios' (registrado desde la app)
+                const usuarioDoc = await getDoc(doc(db, 'usuarios', currentUser.uid));
+                if (!usuarioDoc.exists()) {
+                    statusText.innerText = "Tu cuenta no aparece registrada desde la app. Contacta al administrador del taller.";
+                    userInfo.innerText = `Conectado como: ${currentUser.email}`;
+                    // Cerrar sesión para evitar acciones no autorizadas
+                    await signOut(auth);
+                    currentUser = null;
+                    return;
+                }
+
                 statusText.innerText = "Sesión iniciada correctamente.";
                 userInfo.innerText = `Conectado como: ${currentUser.email}`;
-                
+
                 btnLogin.style.display = 'none';
                 btnDelete.style.display = 'block';
             } catch (error) {
@@ -161,8 +172,8 @@
                 </div>
 
                 <div class="section">
-                    <h2>¿Qué pasa con mis archivos de Google Sheets?</h2>
-                    <p>Por razones de seguridad y permisos limitados, esta página **no puede** borrar las hojas de cálculo creadas en tu Google Drive personal. Si deseas eliminarlas, deberás hacerlo manualmente ingresando a tu cuenta de Google Drive.</p>
+                    <h2>¿Qué pasa con mis archivos externos (Google Drive u otros)?</h2>
+                    <p>Bitauto ya no usa Google Drive ni Google Sheets para sincronización; la aplicación sólo utiliza el inicio de sesión de Google (Google Sign-In) para autenticación cuando corresponde. Si en el pasado creaste hojas en Google Drive, esta página <strong>no puede</strong> borrarlas por ti; para eliminarlas deberás entrar a tu cuenta de Google Drive y eliminarlas manualmente.</p>
                 </div>
             </section>
 

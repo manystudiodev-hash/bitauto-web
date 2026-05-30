@@ -23,26 +23,23 @@
                 <div class="section">
                     <h2>1. Visión general</h2>
                     <p>Bitauto es una app para ayudar a planificar un taller automotriz. Contabiliza los días en taller, controla los vehículos que llevan más tiempo y separa la información de los vehículos que están dentro y fuera del taller.</p>
-                    <p>Según el tipo de plan, los datos pueden verse desde una hoja de Google Sheets en un PC u otro dispositivo con conexión a internet. En el Plan Básico también funciona sin conexión y permite usarla sin almacenar datos en la nube.</p>
+                    <p>Según el tipo de plan, los datos pueden sincronizarse con Firebase Firestore y consultarse desde una web segura. En el Plan Básico también funciona sin conexión y permite usarla sin almacenar datos en la nube.</p>
+                </div>
+
+                <div class="section">
+                    <h2>1.1 Acceso web</h2>
+                    <p>La página web de Bitauto ofrece una vista lineal de los registros creados desde la app. Revisa el correo con el que te registraste: recibirás un enlace para acceder a la web.</p>
+                    <p>Inicia sesión en la web con la misma cuenta que usaste en la app; la web mostrará únicamente los registros pertenecientes a tu taller.</p>
                 </div>
 
                 <div class="section">
                     <h2>2. Cómo iniciar sesión</h2>
                     <p>El acceso a Bitauto está protegido y controlado por el administrador del taller:</p>
                     <ul>
-                        <li><strong>Para administradores</strong>: inician sesión con su cuenta de Google. Al iniciar, se solicita autorizar los permisos de <span class="highlight">Google Drive</span> y <span class="highlight">Google Sheets</span>.
-                            <ul>
-                                <li>Estos permisos son necesarios para conectar asesores y trabajadores, y escribir en la bitácora de Google Sheets.</li>
-                                <li>Si NO autoriza los permisos, el sistema lo enviará al <strong>Plan Básico</strong>, donde no podrá registrar asesores ni trabajadores ni acceder a Google Sheets.</li>
-                            </ul>
+                        <li><strong>Para administradores</strong>: inician sesión usando Firebase Authentication. La web y la app sincronizan datos con Firestore y solo mostrarán la información del taller correspondiente al usuario autenticado.
                         </li>
-                        <li><strong>Para asesores</strong>: solo pueden acceder si el administrador los ha registrado previamente con su correo de Google. Al iniciar sesión, también deben autorizar los permisos de <span class="highlight">Google Drive</span> y <span class="highlight">Google Sheets</span>.
-                            <ul>
-                                <li>Estos permisos son necesarios para conectarse a los datos del taller administrado por el admin.</li>
-                                <li>Si NO autoriza los permisos, no habrá conexión con los datos del taller y no podrá acceder a las órdenes y información compartida.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Para trabajadores</strong>: solo pueden acceder si el administrador los ha registrado previamente con su correo de Google. Al iniciar sesión, acceden con la cuenta registrada y no deben autorizar permisos adicionales de Google Drive o Sheets para ver los datos del taller.</li>
+                        <li><strong>Para asesores</strong>: solo pueden acceder si el administrador los ha registrado previamente desde la app. Al iniciar sesión con Firebase Auth, verán únicamente los datos del taller para el que fueron autorizados.</li>
+                        <li><strong>Para trabajadores</strong>: solo pueden acceder si el administrador los ha registrado previamente con su correo de Google. Al iniciar sesión, acceden con la cuenta registrada y no necesitan autorizar permisos adicionales para ver los datos del taller.</li>
                     </ul>
                     <p><strong>Cambiar de plan:</strong> el administrador puede cambiar entre el Plan Básico y Plan Pro en cualquier momento desde el menú del taller, sección <strong>ADMINISTRAR CUENTA</strong>.</p>
                 </div>
@@ -52,9 +49,10 @@
                     <p>La aplicación ofrece dos planes con características distintas:</p>
                     <ul>
                         <li><strong>Plan Básico</strong>: solo para un usuario. No hay datos en la nube, por lo que si el celular se pierde, también se pierde toda la información almacenada.</li>
-                        <li><strong>Plan Pro</strong>: para talleres con varios usuarios, sincroniza datos en Firebase y Google Sheets, y agrega gestión de roles. Además, incluye informes de trabajadores, tipos de cliente e historial de órdenes.</li>
+                        <li><strong>Plan Pro</strong>: para talleres con varios usuarios, sincroniza datos en Firebase Firestore y agrega gestión de roles. Además, incluye informes de trabajadores, tipos de cliente e historial de órdenes.
+                        </li>
                     </ul>
-                    <p>En el Plan Pro, los datos sensibles del cliente se conservan localmente y solo se envían a Google Sheets si el usuario lo autoriza explícitamente; estos datos no se almacenan en Firebase.</p>
+                    <p>En el Plan Pro, los datos sensibles del cliente (por ejemplo nombre y teléfono) se conservan localmente y también pueden sincronizarse con Firebase Firestore para respaldo. Sin embargo, la página web de Bitauto no mostrará estos campos sensibles: la web solo recibe datos no sensibles mediante consultas filtradas o a través de funciones que devuelven los campos permitidos.</p>
                 </div>
 
                 <div class="section">
@@ -64,7 +62,7 @@
                         <li><strong>Usuarios</strong>: registra asesores y trabajadores indicando su correo de Google. Una vez registrados, ellos pueden iniciar sesión en la app con esa cuenta. El admin también puede dar de baja a usuarios.</li>
                         <li><strong>Catálogos</strong>: tipos de cliente, estados de reparación y servicios disponibles.</li>
                         <li><strong>Órdenes</strong>: ver, editar y filtrar órdenes de trabajo.</li>
-                        <li><strong>Informes</strong>: acceder a estadísticas y enviar resúmenes a Google Sheets.</li>
+                        <li><strong>Informes</strong>: acceder a estadísticas y generar/exportar reportes; los respaldos y sincronización se realizan con Firebase Firestore.</li>
                     </ul>
                 </div>
 
@@ -144,7 +142,6 @@
                         <li>Informe de órdenes terminadas y tiempos de reparación.</li>
                         <li>Informe de ingresos por tipo de cliente o servicio.</li>
                         <li>Informe por trabajador que muestra la cantidad de vehículos asignados.</li>
-                        <li>Respaldo en Google Sheets para análisis externo.</li>
                     </ul>
                 </div>
 

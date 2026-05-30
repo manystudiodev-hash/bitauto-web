@@ -39,9 +39,9 @@
                     <h2>4. Control de acceso y registro de usuarios</h2>
                     <p>Bitauto implementa un sistema de control de acceso administrado:</p>
                     <ul>
-                        <li><strong>Administrador</strong>: puede registrar asesores y trabajadores ingresando su correo de Google. Una vez registrados, estos usuarios pueden iniciar sesión con esa cuenta.</li>
-                        <li><strong>Asesores y trabajadores</strong>: solo pueden acceder a la app si han sido previamente registrados por el administrador con su correo de Google. Si intentan iniciar sesión sin estar registrados, el acceso será rechazado.</li>
-                        <li><strong>Protección de datos</strong>: este sistema garantiza que solo el personal autorizado del taller puede conectarse y acceder a los datos.</li>
+                        <li><strong>Administrador</strong>: registra personal desde la app y gestiona permisos; la web usa Firebase Authentication para validar el acceso.</li>
+                        <li><strong>Asesores y trabajadores</strong>: solo pueden acceder si han sido registrados por el administrador desde la app. La autenticación y autorización se gestionan con Firebase Auth y reglas de Firestore.</li>
+                        <li><strong>Protección de datos</strong>: este sistema garantiza que solo el personal autorizado del taller puede conectarse y acceder a los datos del taller correspondiente.</li>
                     </ul>
                     <p>El administrador es responsable de mantener la lista de usuarios actualizada, registrando nuevo personal y dando de baja a quienes ya no trabajen en el taller.</p>
                 </div>
@@ -60,8 +60,8 @@
                     </ul>
                     <p><strong>Almacenamiento de datos sensibles:</strong></p>
                     <ul>
-                        <li>Los datos sensibles se almacenan <span class="highlight">únicamente en SQLite</span> (base de datos local del dispositivo) y en <span class="highlight">Google Sheets</span>.</li>
-                        <li><strong>NO se envían datos sensibles a Firebase Firestore</strong>. Estos datos permanecen bajo control del administrador del taller.</li>
+                        <li>Los datos sensibles se almacenan en SQLite (base de datos local del dispositivo) y también pueden sincronizarse con Firebase Firestore; la página web de Bitauto no mostrará estos campos sensibles y sólo recibirá datos no sensibles.</li>
+                        <li><strong>NO se envían datos sensibles a Firebase Firestore</strong>. Estos datos permanecen bajo control del administrador del taller y sólo se comparten mediante canales seguros fuera de la sincronización automática.</li>
                     </ul>
                     <p><strong>Responsabilidad:</strong></p>
                     <ul>
@@ -70,34 +70,33 @@
                     </ul>
                     <p><strong>Encriptación en tránsito:</strong></p>
                     <ul>
-                        <li>Los datos sensibles se transmiten <span class="highlight">cifrados</span> desde la aplicación hacia Google Sheets mediante la API de Sheets.</li>
+                        <li>Los datos sensibles se transmiten <span class="highlight">cifrados</span> desde la aplicación hacia Firebase Firestore para respaldo y sincronización segura entre dispositivos.</li>
                         <li>El cifrado garantiza que los datos estén protegidos durante el viaje desde el dispositivo hacia la hoja de cálculo.</li>
                     </ul>
                     <p><strong>Limitación de responsabilidad de Bitauto:</strong></p>
                     <ul>
-                        <li>Bitauto <span class="highlight">no se hace responsable</span> por filtraciones, pérdida o mal uso de datos que ocurran en Google Sheets u otros sistemas gestionados por el cliente.</li>
-                        <li>La responsabilidad sobre la seguridad de la hoja de Google Sheets, el acceso a ella, y el control de permisos recae sobre el administrador del taller.</li>
+                        <li>Bitauto <span class="highlight">no se hace responsable</span> por filtraciones, pérdida o mal uso de datos que ocurran en servicios externos como WhatsApp u otros sistemas gestionados por el cliente.</li>
+                        <li>La responsabilidad sobre la seguridad de cualquier archivo o servicio externo recae sobre el administrador del taller.</li>
                     </ul>
                 </div>
 
                 <div class="section">
                     <h2>7. Sincronización en la nube</h2>
-                    <p>Bitauto sincroniza datos con Firebase Firestore y Google Sheets para respaldos y continuidad del servicio.</p>
+                    <p>Bitauto sincroniza datos con Firebase Firestore para respaldos y continuidad del servicio.</p>
                     <ul>
-                        <li><span class="highlight">Firebase Firestore</span>: respaldo de órdenes y datos estructurados disponible desde múltiples dispositivos. <strong>NOTA: Los datos sensibles (nombre y teléfono del cliente) no se sincronizan con Firebase.</strong></li>
-                        <li><span class="highlight">Google Sheets</span>: escritura en la bitácora propia del usuario para mantener un registro actualizado en su hoja de cálculo.</li>
+                        <li><span class="highlight">Firebase Firestore</span>: respaldo de órdenes y datos estructurados disponible desde múltiples dispositivos. <strong>NOTA: Los datos sensibles (nombre y teléfono del cliente) pueden almacenarse en Firestore para respaldo, pero la web no los mostrará.</strong></li>
                     </ul>
-                    <p>Los datos sensibles se mantienen localmente y, cuando el usuario autoriza la sincronización, se escriben en Google Sheets.</p>
+                    <p>Los datos sensibles se mantienen localmente en el dispositivo y no se sincronizan automáticamente con servicios en la nube.</p>
                 </div>
 
                 <div class="section">
                     <h2>8. Identificador único de órdenes</h2>
-                    <p>Cada orden se identifica con un <span class="highlight">id_firestore</span> único. Este identificador permite asociar correctamente la orden local con su copia en Firestore y con los registros sincronizados en Google Sheets.</p>
+                    <p>Cada orden se identifica con un <span class="highlight">id_firestore</span> único. Este identificador permite asociar correctamente la orden local con su copia en Firestore.</p>
                 </div>
 
                 <div class="section">
                     <h2>9. Acceso y permisos de Google</h2>
-                    <p>La aplicación requiere acceso a tu cuenta de Google y a Google Sheets para escribir en tu propia bitácora. Solo se solicitarán los permisos necesarios para operar correctamente y crear registros en tu hoja de cálculo autorizada.</p>
+                    <p>La aplicación puede utilizar el inicio de sesión de Google (Google Sign-In) para autenticación a través de Firebase Authentication. No se solicitan permisos para Google Drive ni Google Sheets.</p>
                 </div>
 
                 <div class="section">
@@ -153,7 +152,7 @@
 
                 <div class="section">
                     <h2>13. Limitación de responsabilidad</h2>
-                    <p>Bitauto actúa como una herramienta de apoyo. No nos hacemos responsables por decisiones comerciales, errores de ingreso de datos, problemas de hardware o por el uso indebido de la información por parte del usuario. Tampoco somos responsables por filtraciones o compromisos de seguridad en sistemas terceros como Google Sheets o WhatsApp.</p>
+                    <p>Bitauto actúa como una herramienta de apoyo. No nos hacemos responsables por decisiones comerciales, errores de ingreso de datos, problemas de hardware o por el uso indebido de la información por parte del usuario. Tampoco somos responsables por filtraciones o compromisos de seguridad en sistemas terceros como WhatsApp.</p>
                 </div>
 
                 <div class="section">
@@ -163,7 +162,7 @@
 
                 <div class="section">
                     <h2>15. Política de Privacidad</h2>
-                    <p>Para información detallada sobre el manejo de datos personales y los permisos de Google Drive, consulta la <a href="privacy.html">Política de Privacidad</a>.</p>
+                    <p>Para información detallada sobre el manejo de datos personales, consulta la <a href="privacy.html">Política de Privacidad</a>.</p>
                     <p>Bitauto no vende, alquila ni comparte tus datos personales con terceros para fines comerciales.</p>
                 </div>
             </section>
